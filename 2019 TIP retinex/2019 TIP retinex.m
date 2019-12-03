@@ -1,5 +1,4 @@
-%Code for model : min_{R, L} lambda_1|gra^alpha R|||_1 + ...
-%                            lambda_2||gra^betaL||_1 + 1/2*||RL - I||_2^2
+%Code for model : min_{R, L} lambda_1|gra^alpha R|||_1 + lambda_2||gra^betaL||_1 + 1/2*||RL - I||_2^2
 
 close all
 clear all
@@ -8,45 +7,19 @@ lambda1 = 0.01; lambda2 = 0.1; mu1 = 0.02; mu2 = 10;
 gamma1 = 0.02; gamma2 = 10;
 alpha = 1.3; beta = 1.7;
 
-%S = double(imread('cameraman.tif'));
-%S = double(imread('3.png'));
-%S = double(imread('girl.jpg'));
-%S = double(imread('5.png'));
-%S = double(imread('59078.jpg'));
-%S = double(imread('darkness.jpg'));
-%S = double(imread('N-014-0.bmp'));
-%S = double(imread('N-041-0.bmp'));
-%S = double(imread('shadow3.bmp'));
-%S = double(imread('N-025-0.bmp'));
-%S = double(imread('N-003-0.bmp'));
-%S = double(imread('N-002-0.bmp'));
-%S = double(imread('N-051-0.bmp'));
-%S = double(imread('YouTube_0062.png'));
-%S = double(imread('HK_0136.png'));
-%S = double(imread('10.bmp'));
-%S = double(imread('9.bmp'));
-%S = double(imread('7.bmp'));
-%S = double(imread('5.jpg'));
-%S = double(imread('cloudy (16).jpg'));
-%S = double(imread('59078.jpg'));
-%S = double(imread('12003.jpg'));
-%S = double(imread('cloudy (16).jpg'));
-%S = double(imread('35010.jpg'));
-%S = double(imread('277095.jpg'));
-%S = double(imread('69020.jpg'));%daishu
-%S = double(imread('12003.jpg')); 
-%S = double(imread('H-084-0.bmp'));
-%S = double(imread('forest_recovered.jpg'));
+S = double(imread('cameraman.tif'));
 
 %space transfer
 H = rgb2hsv(S);
 I = H(:,:,3);
 [rows, cols] = size(S(:,:,1));
 
-L = I; R = zeros(rows,cols);
-d1x = zeros(rows, cols); d1y = zeros(rows, cols);
-b1x = zeros(rows, cols); b1y = zeros(rows, cols);
-b2x = zeros(rows, cols); b2y = zeros(rows, cols);
+L = I; 
+R = zeros(rows,cols);
+
+d1x = zeros(rows, cols);d1y = zeros(rows, cols);
+b1x = zeros(rows, cols);b1y = zeros(rows, cols);
+b2x = zeros(rows, cols);b2y = zeros(rows, cols);
 p1 = zeros(rows, cols); p2 = zeros(rows, cols);
 u = d1x; v = d1x; 
 iter = 0;
@@ -85,11 +58,14 @@ for i = 1:25 %25%while max(err_R, err_L)>1e-4 %
     v = sylvester(A2, B2, C2);
     
     % for b1 b2 p1 p2
-    b1x = b1x + N1*u - d1x; b1y = b1y + u*M1' - d1y;
+    b1x = b1x + N1*u - d1x; 
+    b1y = b1y + u*M1' - d1y;
     
-    b2x = b2x + N2*v - d2x; b2y = b2y + v*M2' - d2y;
+    b2x = b2x + N2*v - d2x; 
+    b2y = b2y + v*M2' - d2y;
     
-    p1 = p1 + R - u; p2 = p2 + L - v;
+    p1 = p1 + R - u; 
+    p2 = p2 + L - v;
      
 end
 
